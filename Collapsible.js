@@ -79,14 +79,24 @@ export default class Collapsible extends Component {
               ref = this.contentHandle.getNode();
             }
             ref.measure((x, y, width, height) => {
-              this.setState(
-                {
-                  measuring: false,
-                  measured: true,
-                  contentHeight: height,
-                },
-                () => callback(height)
-              );
+              if (height) {
+                this.setState(
+                  {
+                    measuring: false,
+                    measured: true,
+                    contentHeight: height,
+                  },
+                  () => callback(height)
+                );
+              } else {
+                this.setState(
+                  {
+                    measuring: false,
+                    measured: true,
+                  },
+                  () => callback(this.state.contentHeight)
+                );
+              }
             });
           }
         });
